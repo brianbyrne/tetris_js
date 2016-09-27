@@ -1,5 +1,5 @@
 // tetris tutorial video: https://www.youtube.com/watch?v=H2aW5V46khA
-// 10:40
+// 14:40
 
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
@@ -32,12 +32,25 @@ function drawMatrix(matrix, offset) {
 	});
 }
 
+function playerDrop() {
+	player.pos.y++;
+	dropCounter = 0;
+}
+
+let dropCounter = 0;
+let dropInterval = 1000;
 
 let lastTime = 0;
 function update(time = 0) {
 	const deltaTime = time - lastTime;
 	lastTime = time;
-	console.log(deltaTime);
+	
+	dropCounter += deltaTime;
+	
+	if (dropCounter > dropInterval) {
+		playerDrop();
+	}
+	
 	draw();
 	requestAnimationFrame(update);
 }
@@ -46,5 +59,20 @@ const player = {
 	pos: { x: 5, y: 5 },
 	matrix: matrix
 }
+
+document.addEventListener('keydown', event => {
+	console.log(event);
+	
+	if (event.keyCode === 37) {
+		player.pos.x--;
+	} 
+	else if (event.keyCode === 39)  {
+		player.pos.x++;
+	}
+	else if (event.keyCode === 40) {
+		playerDrop();
+	}
+	
+});
 
 update();
