@@ -13,6 +13,11 @@ const matrix = [
 	[0, 1, 0],
 ];
 
+function collide(arena, player) {
+	const[m, o] = [player.matrix, player.pos]
+	// brian start here
+}
+
 function createMatrix(w, h) {
 	const matrix = [];
 	while(h--) {
@@ -42,9 +47,11 @@ function drawMatrix(matrix, offset) {
 
 function merge(arena, player) {
 	player.matrix.forEach((row, y) => {
-		row.forEach((value, x));
-		
-		//brian start here 51:34
+		row.forEach((value, x) => {
+			if (value !== 0) {
+				arena[y + player.pos.y][x + player.pos.x] = value;
+			}
+		});
 	});
 }
 
