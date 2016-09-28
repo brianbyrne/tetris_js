@@ -1,5 +1,5 @@
 // tetris tutorial video: https://www.youtube.com/watch?v=H2aW5V46khA
-// 51:34
+// 19:31
 
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
@@ -15,7 +15,7 @@ const matrix = [
 
 function collide(arena, player) {
 	const[m, o] = [player.matrix, player.pos]
-	// brian start here
+	// brian start here 19:31
 }
 
 function createMatrix(w, h) {
