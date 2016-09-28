@@ -1,5 +1,5 @@
 // tetris tutorial video: https://www.youtube.com/watch?v=H2aW5V46khA
-// 14:40
+// 51:34
 
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
@@ -12,6 +12,14 @@ const matrix = [
 	[1, 1, 1],
 	[0, 1, 0],
 ];
+
+function createMatrix(w, h) {
+	const matrix = [];
+	while(h--) {
+		matrix.push(new Array(w).fill(0));
+	}
+	return matrix;
+}
 
 function draw() {
 	// clear canvas first
@@ -29,6 +37,14 @@ function drawMatrix(matrix, offset) {
 				context.fillRect(x + offset.x, y + offset.y, 1, 1);
 			}
 		});
+	});
+}
+
+function merge(arena, player) {
+	player.matrix.forEach((row, y) => {
+		row.forEach((value, x));
+		
+		//brian start here 51:34
 	});
 }
 
@@ -54,6 +70,9 @@ function update(time = 0) {
 	draw();
 	requestAnimationFrame(update);
 }
+
+const arena = createMatrix(12, 20);
+console.log(arena); console.table(arena);
 
 const player = {
 	pos: { x: 5, y: 5 },
