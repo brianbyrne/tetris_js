@@ -1,5 +1,5 @@
 // tetris tutorial video: https://www.youtube.com/watch?v=H2aW5V46khA
-// 19:31
+// 20:00
 
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
@@ -14,8 +14,18 @@ const matrix = [
 ];
 
 function collide(arena, player) {
+	// brian, this is broken start here:
 	const[m, o] = [player.matrix, player.pos]
-	// brian start here 19:31
+	for(let y = 0; y < m.length; ++y) {
+		for (let x = 0; x < m[y].length; ++x) {
+			if (m[y][x] !== 0 && 
+			   (arena[y + o.y] &&
+			   arena[y + o.y][x + o.x] !== 0)) {
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 function createMatrix(w, h) {
@@ -57,6 +67,11 @@ function merge(arena, player) {
 
 function playerDrop() {
 	player.pos.y++;
+	if (collide(arena, player)) {
+		player.pos.y--;
+		merge(arena, player);
+		player.pos.y = 0;
+	}
 	dropCounter = 0;
 }
 
