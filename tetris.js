@@ -84,11 +84,19 @@ function playerMove(dir) {
 }
 
 function playerRotate(dir) {
+	const pos = player.pos.x;
 	let offset = 1;
 	rotate(player.matrix, dir);
 	while (collide(arena, matrix)) {
 		player.pos.x += offset;
-		// brian start here, 31:20
+		// brian start here, not working:
+		// 1..-2..3..-4..5..-6
+		offset = -(offset +(offset > 0 ? 1 : -1) )
+		if (offset > player.matirx[0].length) {
+			rotate(player.mattrix, -dir);
+			pllayer.pos.x = pos;
+			return;
+		}
 	}
 }
 
