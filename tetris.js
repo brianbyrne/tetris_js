@@ -1,5 +1,5 @@
 // tetris tutorial video: https://www.youtube.com/watch?v=H2aW5V46khA
-// 32:50
+// 33:18
 
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
@@ -33,6 +33,10 @@ function createMatrix(w, h) {
 		matrix.push(new Array(w).fill(0));
 	}
 	return matrix;
+}
+
+function createPiece(type) {
+	// start here brian 33:18
 }
 
 function draw() {
