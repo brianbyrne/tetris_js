@@ -1,5 +1,5 @@
 // tetris tutorial video: https://www.youtube.com/watch?v=H2aW5V46khA
-// 31:30
+// 32:50
 
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
@@ -87,13 +87,13 @@ function playerRotate(dir) {
 	const pos = player.pos.x;
 	let offset = 1;
 	rotate(player.matrix, dir);
-	while (collide(arena, matrix)) {
+	while (collide(arena, player)) {
 		player.pos.x += offset;
-		// brian start here, not working:
 		// 1..-2..3..-4..5..-6
 		offset = -(offset +(offset > 0 ? 1 : -1) )
-		if (offset > player.matirx[0].length) {
-			rotate(player.mattrix, -dir);
+		if (offset > player.matrix[0].length) {
+			// TODO re-read - understand!
+			rotate(player.matrix, -dir);
 			pllayer.pos.x = pos;
 			return;
 		}
@@ -147,7 +147,7 @@ const player = {
 }
 
 document.addEventListener('keydown', event => {
-	console.log(event);
+	//console.log(event);
 	
 	if (event.keyCode === 37) {
 		playerMove(-1);
