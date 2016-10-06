@@ -1,5 +1,5 @@
 // tetris tutorial video: https://www.youtube.com/watch?v=H2aW5V46khA
-// 33:18
+// 37:42
 
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
