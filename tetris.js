@@ -1,13 +1,25 @@
 // tetris tutorial video: https://www.youtube.com/watch?v=H2aW5V46khA
-// 37:42
+// 41:32
 
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 context.scale(20, 20);
 
-
-
 const matrix = [];
+
+function arenaSweep() {
+	outer: for (let y = arena.length -1; y > 0; --y) {
+		for (let x = 0; x < arena[y].length; ++x) {
+			if (arena[y][x] === 0) {
+				continue outer;
+			}
+		}
+		
+		let row = arena.splice(y, 1)[0].fill(0);
+		arena.unshift(row);
+		++y;
+	}
+}
 
 function collide(arena, player) {
 	const[m, o] = [player.matrix, player.pos]
@@ -40,37 +52,37 @@ function createPiece(type) {
 		];
 	} else if (type === 'O') {
 		return [
-			[1,1],
-			[1,1]
+			[2,2],
+			[2,2]
 		];
 	} else if (type === 'L') {
 		return [
-			[0,1,0],
-			[0,1,0],
-			[1,1,1]		
+			[0,3,0],
+			[0,3,0],
+			[3,3,0]		
 		];
 	} else if (type === 'J') {
 		return [
-			[0,1,0],
-			[0,1,0],
-			[1,1,0]
+			[0,4,0],
+			[0,4,0],
+			[4,4,0]
 		];
 	} else if (type === 'I') {
 		return [
-			[0, 1, 0, 0],
-			[0, 1, 0, 0],
-			[0, 1, 0, 0],
-			[0, 1, 0, 0]
+			[0, 5, 0, 0],
+			[0, 5, 0, 0],
+			[0, 5, 0, 0],
+			[0, 5, 0, 0]
 		];
 	} else if (type === 'S') {
 		return [
-			[0,1,1],
-			[1,1,0]
+			[0,6,6],
+			[6,6,0]
 		]; 
 	} else if (type === 'Z') {
 		return [
-			[1,1,0],
-			[0,1,1]
+			[7,7,0],
+			[0,7,7]
 		]; 
 	}
 }
@@ -88,7 +100,7 @@ function drawMatrix(matrix, offset) {
 	matrix.forEach((row, y) => {
 		row.forEach((value, x) => {
 			if (value !== 0) {
-				context.fillStyle = 'red';
+				context.fillStyle =  colours[value];
 				context.fillRect(x + offset.x, y + offset.y, 1, 1);
 			}
 		});
@@ -112,6 +124,7 @@ function playerDrop() {
 		merge(arena, player);
 		playerReset();
 		player.pos.y = 0;
+		arenaSweep();
 	}
 	dropCounter = 0;
 }
@@ -129,7 +142,11 @@ function playerReset() {
 	player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
 	player.pos.y = 0;
 	player.pos.x = (arena[0].length / 2 | 0) - 
-					(player.matrix[0].length / 2 | 0); // floor							   
+					(player.matrix[0].length / 2 | 0); // floor
+	
+	if (collide(arena, player)) {
+		arena.forEach(row => row.fill(0));
+	}
 }
 
 function playerRotate(dir) {
@@ -187,6 +204,16 @@ function update(time = 0) {
 	draw();
 	requestAnimationFrame(update);
 }
+
+const colours = [
+	null,
+	'green',
+	'blue',
+	'white',
+	'red',
+	'purple',
+	'yellow'
+];
 
 const arena = createMatrix(12, 20);
 
